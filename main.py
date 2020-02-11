@@ -14,8 +14,10 @@ class Frame(ttk.Frame):
         d_font = font.Font(family="System",size=12,weight="bold")
         r = argr
         c = argc
-        labelframe = tk.Label(text="計算結果",font = d_font, width=60,height=3)
+        labelframe = tk.LabelFrame(bd=2,relief="ridge",text="計算結果")
         labelframe.grid(row=r, column=c, columnspan=4)
+        label = tk.Label(labelframe,text=0,font = d_font, width=60,height=3)
+        label.grid(row=r, column=c, columnspan=4)
         
     #数字ボタン作成
     def createbutton_num(self, argr, argc):
