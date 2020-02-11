@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font as font
 import tkinter.ttk as ttk
-import lib.calc as cal
+
 
 class Frame(ttk.Frame):
     def __init__(self, master=None, **kwargs):
@@ -14,9 +14,9 @@ class Frame(ttk.Frame):
         d_font = font.Font(family="System",size=12,weight="bold")
         r = argr
         c = argc
-        labelframe = tk.LabelFrame(bd=2,relief="ridge",text="計算結果")
+        labelframe = tk.LabelFrame(bd=2,relief="ridge",text="calculate result")
         labelframe.grid(row=r, column=c, columnspan=4)
-        label = tk.Label(labelframe,text=0,font = d_font, width=60,height=3)
+        label = tk.Label(labelframe,textvariable="", font = d_font, width=60,height=3)
         label.grid(row=r, column=c, columnspan=4)
         
     #数字ボタン作成
@@ -30,17 +30,24 @@ class Frame(ttk.Frame):
             c = 0
             gridc = argc
             while c < len(nu):
-                button = tk.Button(text=str(num[r][c]),font=n_font,width=10,height=3)
+                n = str(num[r][c])
+                button = tk.Button(text=n,font=n_font,width=10,height=3)
+                button.bind("<Button-1>",lambda x: self.push(n))
                 button.grid(row=(gridr) ,column=(gridc) ,padx=20,pady=20)
                 c += 1   
                 gridc += 1
             r += 1
             gridr += 1
+        #0
         button = tk.Button(text=0,font=n_font,width=26,height=3)
+        button.bind("<Button-1>",lambda x: self.push("0"))
         button.grid(row=gridr,column=argc,columnspan=2,padx=20,pady=20)
-        button = tk.Button(text="c",font=n_font,width=12,height=3)
-        button.grid(row=gridr,column=argc + 2,columnspan=1,padx=20,pady=20)
 
+        #C
+        button = tk.Button(text="c",font=n_font,width=12,height=3)
+        button.bind("<Button-1>",lambda x: self.push("a"))
+        button.grid(row=gridr,column=argc + 2, columnspan=1,padx=20,pady=20)
+    
     #演算子ボタン作成
     def createbutton_ope(self, argr, argc):
         o_font = font.Font(family="System",size=10,weight="bold")
@@ -51,9 +58,14 @@ class Frame(ttk.Frame):
         gridc = argc
         while r < len(ope):
             button = tk.Button(text=ope[r],font=o_font,width=10,height=3)
+            button.bind("<Button-1>",lambda x: self.push(ope[r]))
             button.grid(row=gridr,column=gridc, padx=20,pady=20)
             r += 1
             gridr += 1           
+
+    #ボタンクリック
+    def push(self,str):
+        print(str)
 
 if __name__ == '__main__':
   root = tk.Tk()
