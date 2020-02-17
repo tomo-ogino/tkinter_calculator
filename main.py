@@ -18,7 +18,9 @@ class Frame(ttk.Frame):
         c = argc
         labelframe = tk.LabelFrame(bd=2,relief="ridge",text="calculate result")
         labelframe.grid(row=r, column=c, columnspan=4)
-        label = tk.Label(labelframe,textvariable="", font = d_font, width=60,height=3)
+        var = tk.StringVar()
+        var.set("0")
+        label = tk.Label(labelframe,textvariable=var, font = d_font, width=60,height=3)
         label.grid(row=r, column=c, columnspan=4)
         
     #数字ボタン作成
@@ -61,20 +63,30 @@ class Frame(ttk.Frame):
             r += 1
             gridr += 1           
 
-#Pushクラスを更新
+#
+class Label:
+    def __init__(self, name):
+        self.name = name
+    def __call__(self, event=None):
+        pass
+
+#Pushクラス
 class Push:
-    def __init__(self,str,ope):
+    def __init__(self, str, ope):
         self.name = str
         if ope == "ope":
             self.ope = True
         else:
             self.ope = False
-    #ボタンクリック
-    def __call__(self, event=None):
+
+    def __call__(self,event=None):
         if self.ope:
             print("クリア")
         else:
-            print(self.name)
+            self.append_num()
+    
+    def append_num(self):
+        Frame(root).create_display(ver.get()+"1",0,0)
 
 if __name__ == '__main__':
   root = tk.Tk()

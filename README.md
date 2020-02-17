@@ -24,3 +24,4 @@ I use this repository as an exercise for my python programs and Git commands.
 ## ***[problem]***
 ### 2020/2/12
 * ~~すべての数字ボタン押下時に'3'が実行される~~　-> 2020/2/17対応完了
+* ボタン作成をfor in rangeに書き換え
