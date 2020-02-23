@@ -5,11 +5,11 @@ import tkinter.ttk as ttk
 from lib.calc import *
 
 
-class Frame(ttk.Frame):
+class Tk_Frame(ttk.Frame):
     def __init__(self, master=None, num="0", **kwargs):
         super().__init__(master, **kwargs)
-        self.var = tk.StringVar()
-        self.var.set(num)
+        self.display = tk.StringVar()
+        self.display.set(num)
         self.create_display(num,0,0)
         self.createbutton_num(1,0)
         self.createbutton_ope(1,3)
@@ -19,10 +19,10 @@ class Frame(ttk.Frame):
         d_font = font.Font(family="System",size=12,weight="bold")
         #labelframe = tk.LabelFrame(bd=2,relief="ridge",text="calculate result")
         #labelframe.grid(row=r, column=c, columnspan=4)
-        var = tk.StringVar()
-        var.set(num)
-        label = tk.Label(root,textvariable=var, font = d_font, width=60,height=3)
-        label.grid(row=r, column=c, columnspan=4)
+        
+        
+        self.label = tk.Label(root,textvariable=self.display, font = d_font, width=60,height=3)
+        self.label.grid(row=r, column=c, columnspan=4)
         
     #数字ボタン作成
     def createbutton_num(self, argr, argc):
@@ -50,18 +50,6 @@ class Frame(ttk.Frame):
             button = tk.Button(root, text=ope[r],font=o_font,width=10,height=3,command=Push(ope[r],"ope"))
             button.grid(row=r + argr,column=argc, padx=20,pady=20)
 
-        '''
-        r = 0
-        gridr = argr
-        c = 0
-        gridc = argc
-        while r < len(ope):
-            button = tk.Button(root, text=ope[r],font=o_font,width=10,height=3,command=Push(ope[r],"ope"))
-            button.grid(row=gridr,column=gridc, padx=20,pady=20)
-            r += 1
-            gridr += 1           
-        '''
-
 #Labelクラス
 class Label:
     def __init__(self, name):
@@ -69,27 +57,26 @@ class Label:
     def __call__(self, event=None):
         pass
 
-#Pushクラス
-class Push(Frame):
-    def __init__(self, str, ope):
+#Pushクラス(Frameクラス継承)
+class Push(Tk_Frame):
+    #ボタン名とアクションをセット
+    def __init__(self, str, action):
         self.name = str
-        if ope == "ope":
-            self.ope = True
-        else:
-            self.ope = False
-
+        self.action = action
+    #コンストラクタでセットしたアクションを実行
     def __call__(self,event=None):
-        if self.ope:
+        if self.action == "ope":
             print("クリア")
         else:
             self.append_num()
     
     def append_num(self):
-        super().create_display(super().var().get()+self.name,0,0)
+        #super().create_display(super().var().get()+self.name,0,0)
+        self.display.set("aaa")
 
 if __name__ == '__main__':
   root = tk.Tk()
   root.title("calculator")
   root.geometry("600x600")
-  app = Frame(root)
+  app = Tk_Frame(root)
   root.mainloop()
